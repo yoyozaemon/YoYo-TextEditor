@@ -66,7 +66,7 @@ void Window::move_cursor(int key)
 {
     erow *row = (e.cy >= e.num_rows)?NULL:&e.row[e.cy];
 
-    swtich(key)
+    switch(key)
     {
         case KEY_LEFT:
         if(e.cx!=0)
@@ -79,5 +79,37 @@ void Window::move_cursor(int key)
             e.cx = e.row[e.cy].size;
         } 
         break;
+
+        case KEY_RIGHT:
+        if(row && e.cx < row->size)
+        {
+            e.cx++;
+        }
+        else if(row && e.cx == row->size)
+        {
+            e.cy++;
+            e.cx = 0;
+        }
+        break;
+
+        case KEY_UP:
+        if(e.cy!=0)
+        {
+            e.cy--;
+        }
+        break;
+
+        case KEY_DOWN:
+        if(e.cy < e.num_rows)
+        {
+            e.cy++;
+        }
+        break;
+    }
+    row = (e.cy >= e.num_rows) ? NULL:&e.row[e.cy];
+    int rowlen = row ? row->size:0;
+    if(e.cx > rowlen)
+    {
+        e.cx = rowlen;
     }
 }
